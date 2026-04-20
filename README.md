@@ -1,5 +1,5 @@
 # MySQL Database Migration Guide
-### Olist Portfolio Project — Laptop-to-Laptop Transfer
+### Olist Portfolio Project - Laptop-to-Laptop Transfer
 
 > **Context:** Migrating the Olist Brazilian E-Commerce dataset and schema from a primary development machine (ThinkPad) to a secondary machine (Dell Inspiron 13-5378) running MySQL 8.0.45 on Windows 10.
 
@@ -8,12 +8,12 @@
 ## Table of Contents
 
 1. [Overview & Decision Matrix](#1-overview--decision-matrix)
-2. [Option A — Manual Export/Import (mysqldump)](#2-option-a--manual-exportimport-mysqldump)
-3. [Option B — MySQL Workbench Data Export/Import](#3-option-b--mysql-workbench-data-exportimport)
-4. [Option C — Direct File Copy (Data Directory)](#4-option-c--direct-file-copy-data-directory)
-5. [Option D — OCI MySQL HeatWave (Cloud Staging)](#5-option-d--oci-mysql-heatwave-cloud-staging)
-6. [Option E — Shared Network Drive / USB Transfer](#6-option-e--shared-network-drive--usb-transfer)
-7. [Option F — GitHub as an Intermediary](#7-option-f--github-as-an-intermediary)
+2. [Option A - Manual Export/Import (mysqldump)](#2-option-a--manual-exportimport-mysqldump)
+3. [Option B - MySQL Workbench Data Export/Import](#3-option-b--mysql-workbench-data-exportimport)
+4. [Option C - Direct File Copy (Data Directory)](#4-option-c--direct-file-copy-data-directory)
+5. [Option D - OCI MySQL HeatWave (Cloud Staging)](#5-option-d--oci-mysql-heatwave-cloud-staging)
+6. [Option E - Shared Network Drive / USB Transfer](#6-option-e--shared-network-drive--usb-transfer)
+7. [Option F - GitHub as an Intermediary](#7-option-f--github-as-an-intermediary)
 8. [Post-Migration Validation](#8-post-migration-validation)
 9. [Recommended Approach](#9-recommended-approach)
 
@@ -23,22 +23,22 @@
 
 | Option | Difficulty | Speed | Requires Network | Best For |
 |--------|------------|-------|-----------------|----------|
-| A — mysqldump (CLI) | Low | Medium | No | Reliable, portable, version-safe |
-| B — Workbench GUI | Very Low | Medium | No | Non-CLI users, visual control |
-| C — Data directory copy | Medium | Fast | No | Same MySQL version on both machines |
-| D — OCI HeatWave | Medium | Slow (upload/download) | Yes | Cloud backup + migration in one step |
-| E — USB / Network share | Low | Fast | Optional | Quick local transfer |
-| F — GitHub | Low | Slow for large data | Yes | Small schemas; keeps history in repo |
+| A - mysqldump (CLI) | Low | Medium | No | Reliable, portable, version-safe |
+| B - Workbench GUI | Very Low | Medium | No | Non-CLI users, visual control |
+| C - Data directory copy | Medium | Fast | No | Same MySQL version on both machines |
+| D - OCI HeatWave | Medium | Slow (upload/download) | Yes | Cloud backup + migration in one step |
+| E - USB / Network share | Low | Fast | Optional | Quick local transfer |
+| F - GitHub | Low | Slow for large data | Yes | Small schemas; keeps history in repo |
 
 **Dataset size note:** The full Olist dataset (9 CSV files + schema) is approximately 120–150 MB uncompressed. All options below are viable at this size.
 
 ---
 
-## 2. Option A — Manual Export/Import (mysqldump)
+## 2. Option A - Manual Export/Import (mysqldump)
 
 The most portable and reliable method. Works across MySQL versions and operating systems.
 
-### Step 1 — Export on source machine
+### Step 1 - Export on source machine
 
 Open Command Prompt or PowerShell and run:
 
@@ -61,11 +61,11 @@ mysqldump -u root -p \
 
 The output file `olist_backup.sql` will be created in your current directory.
 
-### Step 2 — Transfer the file
+### Step 2 - Transfer the file
 
 Copy `olist_backup.sql` to the target machine via USB, shared folder, or any method from Options E/F.
 
-### Step 3 — Import on target machine (Dell Inspiron)
+### Step 3 - Import on target machine (Dell Inspiron)
 
 ```bash
 # Create the target database first
@@ -80,7 +80,7 @@ mysql -u root -p olist_db < olist_backup.sql
 ### Pros
 - Version-safe (SQL text format, not binary)
 - Single portable file
-- Human-readable — useful for portfolio/learning purposes
+- Human-readable - useful for portfolio/learning purposes
 
 ### Cons
 - Slower than binary methods for very large databases
@@ -88,7 +88,7 @@ mysql -u root -p olist_db < olist_backup.sql
 
 ---
 
-## 3. Option B — MySQL Workbench Data Export/Import
+## 3. Option B - MySQL Workbench Data Export/Import
 
 A GUI-based alternative to mysqldump. Produces the same `.sql` output but through a visual interface.
 
@@ -101,7 +101,7 @@ A GUI-based alternative to mysqldump. Produces the same `.sql` output but throug
 5. Check **"Include Create Schema"**
 6. Click **Start Export**
 
-### Import (target machine — Dell Inspiron)
+### Import (target machine - Dell Inspiron)
 
 1. Open **MySQL Workbench** → connect to MySQL 8.0.45
 2. Go to **Server** → **Data Import/Restore**
@@ -120,7 +120,7 @@ A GUI-based alternative to mysqldump. Produces the same `.sql` output but throug
 
 ---
 
-## 4. Option C — Direct File Copy (Data Directory)
+## 4. Option C - Direct File Copy (Data Directory)
 
 Copies the raw MySQL data files instead of exporting SQL. **Only safe when both machines run the same MySQL version (8.0.45 in this case).**
 
@@ -168,13 +168,13 @@ Default on Windows: `C:\ProgramData\MySQL\MySQL Server 8.0\Data\`
 - No SQL generation required
 
 ### Cons
-- **Version-sensitive** — only safe if both machines run identical MySQL versions
+- **Version-sensitive** - only safe if both machines run identical MySQL versions
 - Risk of corruption if service is not properly stopped first
 - Not suitable for cross-OS or cross-version migration
 
 ---
 
-## 5. Option D — OCI MySQL HeatWave (Cloud Staging)
+## 5. Option D - OCI MySQL HeatWave (Cloud Staging)
 
 Uses Oracle Cloud Infrastructure (OCI) as an intermediary. Exports from source → uploads to OCI HeatWave → imports on target. Also serves as a cloud backup.
 
@@ -245,7 +245,7 @@ mysql -u root -p olist_db < olist_from_cloud.sql
 
 ---
 
-## 6. Option E — Shared Network Drive / USB Transfer
+## 6. Option E - Shared Network Drive / USB Transfer
 
 The simplest approach for physically co-located machines. Used in combination with Option A or B.
 
@@ -274,7 +274,7 @@ The simplest approach for physically co-located machines. Used in combination wi
 
 ---
 
-## 7. Option F — GitHub as an Intermediary
+## 7. Option F - GitHub as an Intermediary
 
 Suitable for schema-only migrations or small datasets. Large data files should be handled via Git LFS or kept out of version control entirely.
 
