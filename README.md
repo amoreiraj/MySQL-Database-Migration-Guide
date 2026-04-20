@@ -382,4 +382,4 @@ This approach is fast, reliable, version-safe, and requires no external accounts
 
 ---
 
-*Generated: May 2026 | MySQL 8.0.45 | Windows 10 | Olist Brazilian E-Commerce Dataset*
+*Created: May 2026 | MySQL 8.0.45 | Windows 10 | Olist Brazilian E-Commerce Dataset*
